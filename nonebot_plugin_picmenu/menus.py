@@ -6,6 +6,7 @@
 # @Faction  :
 # @Version  :
 # ===============程序开始===============
+import copy
 from PIL import Image
 from dataclasses import dataclass
 from fuzzywuzzy import process, fuzz
@@ -190,12 +191,13 @@ class Template(PicTemplate):
             brief_des='说明',
             detail_des='',
         )
-        data.insert(0, column_title)
+        _data = copy.deepcopy(data)
+        _data.insert(0, column_title)
         column_count = 4
-        row_count = len(data)
+        row_count = len(_data)
         # 数据尺寸测算
         row_size_list = []
-        for index, func_data in enumerate(data):
+        for index, func_data in enumerate(_data):
             if index == 0:
                 index_size = calculate_text_size('序号', self.basic_font_size, self.using_font)
             else:
@@ -238,7 +240,7 @@ class Template(PicTemplate):
             basis_point[0] = initial_point[0]
             basis_point[1] += row_height_list[row_id]
         # 填字
-        for index, func_data in enumerate(data):
+        for index, func_data in enumerate(_data):
             # 第一个cell填id
             if index == 0:
                 id_text = simple_text('序号', self.basic_font_size, self.using_font, self.colors['blue'])
