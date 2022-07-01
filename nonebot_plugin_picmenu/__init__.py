@@ -9,7 +9,7 @@ from nonebot.adapters.onebot.v11.message import MessageSegment
 import re
 
 __plugin_meta__ = PluginMetadata(
-    name='nonebot_plugin_menu',
+    name='帮助菜单',
     description='为插件提供可视化的帮助菜单',
     usage='显示所有插件及描述：菜单\n'
           '显示某一插件的功能菜单：菜单 插件名/序号\n'
@@ -20,7 +20,7 @@ __plugin_meta__ = PluginMetadata(
         'menu_data': [
             {
                 'func': '查询菜单',
-                'trigger_method': 'on_startwith',
+                'trigger_method': '普通消息',
                 'trigger_condition': '菜单',
                 'brief_des': '用于查询菜单的命令',
                 'detail_des': '查看插件总表、插件命令和命令详情,具体方法如下：\n'
