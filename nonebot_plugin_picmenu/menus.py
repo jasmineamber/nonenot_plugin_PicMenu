@@ -261,7 +261,7 @@ class Template(PicTemplate):
                                               self.colors['blue'])
             table.img_paste(
                 trigger_method_text,
-                table.align_box(f'box_{index}_2', trigger_method_text, align='center'),
+                table.align_box(f'box_{index}_1', trigger_method_text, align='center'),
                 isalpha=True
             )
             # 第四个cell里填trigger_condition（触发条件）
@@ -269,7 +269,7 @@ class Template(PicTemplate):
                                                  self.colors['blue'])
             table.img_paste(
                 trigger_condition_text,
-                table.align_box(f'box_{index}_3', trigger_condition_text, align='center'),
+                table.align_box(f'box_{index}_2', trigger_condition_text, align='center'),
                 isalpha=True
             )
             # 第五个cell里填brief_des（功能简述）
@@ -285,7 +285,7 @@ class Template(PicTemplate):
                                         )
             table.img_paste(
                 brief_des_text,
-                table.align_box(f'box_{index}_4', brief_des_text, align='center'),
+                table.align_box(f'box_{index}_3', brief_des_text, align='center'),
                 isalpha=True
             )
         # 获取table尺寸
