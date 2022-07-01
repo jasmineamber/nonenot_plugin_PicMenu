@@ -138,7 +138,10 @@ class Template(PicTemplate):
                 table.align_box(f'box_{x}_1', plugin_name_text, align='center'),
                 isalpha=True
             )
-            plugin_description_text = multi_text(data[1][x],
+            if x == 0:
+                plugin_description_text = simple_text(data[1][x], self.basic_font_size, self.using_font, self.colors['blue'])
+            else:
+                plugin_description_text = multi_text(data[1][x],
                                                  box_size=(300, 0),
                                                  default_font=self.using_font,
                                                  default_color=self.colors['blue'],
