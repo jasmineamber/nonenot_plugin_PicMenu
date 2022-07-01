@@ -293,7 +293,13 @@ class Template(PicTemplate):
         # 获取table尺寸
         table_size = table.img.size
         # usage的文字描述
-        usage_text = multi_text('用法：' + plugin_data.usage,
+        # usage_text = multi_text('用法：' + plugin_data.usage,
+        #                         box_size=(table_size[0] - 30, 0),
+        #                         default_font=self.using_font,
+        #                         default_color=self.colors['blue'],
+        #                         default_size=self.basic_font_size
+        #                         )
+        usage_text = multi_text('',
                                 box_size=(table_size[0] - 30, 0),
                                 default_font=self.using_font,
                                 default_color=self.colors['blue'],
