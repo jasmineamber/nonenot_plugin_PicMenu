@@ -183,13 +183,24 @@ class Template(PicTemplate):
         """
         plugin_name = plugin_data.name
         data = plugin_data.funcs
-        column_count = 5
+        column_title = FuncData(
+            func='',
+            trigger_method='触发方式',
+            trigger_condition='触发命令',
+            brief_des='说明',
+            detail_des='',
+        )
+        data.insert(0, column_title)
+        column_count = 4
         row_count = len(data)
         # 数据尺寸测算
         row_size_list = []
         for index, func_data in enumerate(data):
-            index_size = calculate_text_size(str(index + 1), self.basic_font_size, self.using_font)
-            func_size = calculate_text_size(func_data.func, self.basic_font_size, self.using_font)
+            if index == 0:
+                index_size = calculate_text_size('序号', self.basic_font_size, self.using_font)
+            else:
+                index_size = calculate_text_size(str(index), self.basic_font_size, self.using_font)
+            # func_size = calculate_text_size(func_data.func, self.basic_font_size, self.using_font)
             method_size = calculate_text_size(func_data.trigger_method, self.basic_font_size, self.using_font)
             condition_size = calculate_text_size(func_data.trigger_condition, self.basic_font_size, self.using_font)
             brief_des_size = multi_text(func_data.brief_des,
@@ -197,7 +208,7 @@ class Template(PicTemplate):
                                         default_size=25,
                                         box_size=(300, 0)
                                         ).size
-            row_size_list.append((index_size, func_size, method_size, condition_size, brief_des_size))
+            row_size_list.append((index_size, method_size, condition_size, brief_des_size))
         # 边距
         margin = 10
         # 测行高
@@ -206,8 +217,7 @@ class Template(PicTemplate):
             max((x[0][0] + margin * 2 for x in row_size_list)),
             max((x[1][0] + margin * 2 for x in row_size_list)),
             max((x[2][0] + margin * 2 for x in row_size_list)),
-            max((x[3][0] + margin * 2 for x in row_size_list)),
-            max((x[4][0] + margin * 2 for x in row_size_list))
+            max((x[3][0] + margin * 2 for x in row_size_list))
         )
         # 建立表格画板
         table_width = sum(col_max_width_tuple) + 3
@@ -230,19 +240,22 @@ class Template(PicTemplate):
         # 填字
         for index, func_data in enumerate(data):
             # 第一个cell填id
-            id_text = simple_text(str(index + 1), self.basic_font_size, self.using_font, self.colors['blue'])
+            if index == 0:
+                id_text = simple_text('序号', self.basic_font_size, self.using_font, self.colors['blue'])
+            else:
+                id_text = simple_text(str(index), self.basic_font_size, self.using_font, self.colors['blue'])
             table.img_paste(
                 id_text,
                 table.align_box(f'box_{index}_0', id_text, align='center'),
                 isalpha=True
             )
-            # 第二个cell里填func（功能）
-            func_text = simple_text(func_data.func, self.basic_font_size, self.using_font, self.colors['blue'])
-            table.img_paste(
-                func_text,
-                table.align_box(f'box_{index}_1', func_text, align='center'),
-                isalpha=True
-            )
+            # # 第二个cell里填func（功能）
+            # func_text = simple_text(func_data.func, self.basic_font_size, self.using_font, self.colors['blue'])
+            # table.img_paste(
+            #     func_text,
+            #     table.align_box(f'box_{index}_1', func_text, align='center'),
+            #     isalpha=True
+            # )
             # 第三个cell里填trigger_method（触发方式）
             trigger_method_text = simple_text(func_data.trigger_method, self.basic_font_size, self.using_font,
                                               self.colors['blue'])
@@ -260,7 +273,11 @@ class Template(PicTemplate):
                 isalpha=True
             )
             # 第五个cell里填brief_des（功能简述）
-            brief_des_text = multi_text(func_data.brief_des,
+            if index == 0:
+                brief_des_text = simple_text(func_data.brief_des, self.basic_font_size, self.using_font,
+                                                 self.colors['blue'])
+            else:
+                brief_des_text = multi_text(func_data.brief_des,
                                         box_size=(300, 0),
                                         default_font=self.using_font,
                                         default_color=self.colors['blue'],
