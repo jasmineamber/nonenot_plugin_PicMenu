@@ -80,12 +80,17 @@ class Template(PicTemplate):
         :param data: 元组(列表， 列表)
         :return: Image对象
         """
+        data[0].insert(0, '插件名称')
+        data[1].insert(0, '插件说明')
         column_count = len(data) + 1
         row_count = len(data[0])
         # 数据尺寸测算
         row_size_list = []
         for x in range(row_count):
-            index_size = calculate_text_size(str(x + 1), self.basic_font_size, self.using_font)
+            if x == 0:
+                index_size = calculate_text_size('序号', self.basic_font_size, self.using_font)
+            else:
+                index_size = calculate_text_size(str(x), self.basic_font_size, self.using_font)
             plugin_name_size = calculate_text_size(data[0][x], self.basic_font_size, self.using_font)
             plugin_description_size = multi_text(data[1][x],
                                                  default_font=self.using_font,
@@ -117,41 +122,20 @@ class Template(PicTemplate):
                 basis_point[0] += box_size[0]
             basis_point[0] = initial_point[0]
             basis_point[1] += row_height_list[row_id]
-        # add column name
-        id_text = simple_text('序号', self.basic_font_size, self.using_font, self.colors['blue'])
-        table.img_paste(
-            id_text,
-            table.align_box(f'box_0_0', id_text, align='center'),
-            isalpha=True
-        )
-        plugin_name_text = simple_text('插件名称', self.basic_font_size, self.using_font, self.colors['blue'])
-        table.img_paste(
-            plugin_name_text,
-            table.align_box(f'box_0_1', plugin_name_text, align='center'),
-            isalpha=True
-        )
-        plugin_description_text = multi_text('插件说明',
-                                                box_size=(300, 0),
-                                                default_font=self.using_font,
-                                                default_color=self.colors['blue'],
-                                                default_size=self.basic_font_size
-                                                )
-        table.img_paste(
-            plugin_description_text,
-            table.align_box(f'box_0_2', plugin_description_text, align='center'),
-            isalpha=True
-        )
         for x in range(row_count):
-            id_text = simple_text(str(x + 1), self.basic_font_size, self.using_font, self.colors['blue'])
+            if x == 0:
+                id_text = simple_text('序号', self.basic_font_size, self.using_font, self.colors['blue'])
+            else:
+                id_text = simple_text(str(x), self.basic_font_size, self.using_font, self.colors['blue'])
             table.img_paste(
                 id_text,
-                table.align_box(f'box_{x + 1}_0', id_text, align='center'),
+                table.align_box(f'box_{x}_0', id_text, align='center'),
                 isalpha=True
             )
             plugin_name_text = simple_text(data[0][x], self.basic_font_size, self.using_font, self.colors['blue'])
             table.img_paste(
                 plugin_name_text,
-                table.align_box(f'box_{x + 1}_1', plugin_name_text, align='center'),
+                table.align_box(f'box_{x}_1', plugin_name_text, align='center'),
                 isalpha=True
             )
             plugin_description_text = multi_text(data[1][x],
@@ -162,7 +146,7 @@ class Template(PicTemplate):
                                                  )
             table.img_paste(
                 plugin_description_text,
-                table.align_box(f'box_{x + 1}_2', plugin_description_text, align='center'),
+                table.align_box(f'box_{x}_2', plugin_description_text, align='center'),
                 isalpha=True
             )
         table_size = table.img.size
