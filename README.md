@@ -1,6 +1,7 @@
 <div align="center">
 
 # nonebot-plugin-menu
+
 ### Nonebot2 插件菜单插件
 
 <img src="https://img.shields.io/badge/tested_python-3.8.5-blue" alt="python">
@@ -23,15 +24,16 @@
 
 ## 特性
 
-- 使用PluginMetadata加载数据
+- 使用 PluginMetadata 加载数据
 - 所有信息以图片方式呈现
 - 共三级菜单，依次显示插件总表、插件功能总表、功能详情
 - 查询时插件名和功能支持模糊匹配
 - 可更换菜单样式模板[目前仅有默认模板]
+- 可配置菜单顺序，env 文件中配置 PLUGINS_ORDER
 
 ## 如何添加菜单
 
-参考插件中__init__.py或者参考以下代码
+参考插件中**init**.py 或者参考以下代码
 
 **Example:**
 
@@ -65,9 +67,9 @@ __plugin_meta__ = PluginMetadata(
 
 ### 初次使用
 
-1. 加载插件后先启动bot，会在bot.py目录下生成menu_config文件夹
-2. 修改menu_config/config.json 中 "default"的值为任一字体的路径（不要有反斜杠）</br>字体格式为[PIL.ImageFont.truetype](https://pillow.readthedocs.io/en/stable/reference/ImageFont.html?highlight=truetype#PIL.ImageFont.truetype)所支持的字体
-3. 保存config.json后重启bot即可使用菜单
+1. 加载插件后先启动 bot，会在 bot.py 目录下生成 menu_config 文件夹
+2. 修改 menu_config/config.json 中 "default"的值为任一字体的路径（不要有反斜杠）</br>字体格式为[PIL.ImageFont.truetype](https://pillow.readthedocs.io/en/stable/reference/ImageFont.html?highlight=truetype#PIL.ImageFont.truetype)所支持的字体
+3. 保存 config.json 后重启 bot 即可使用菜单
 
 > 以下示例均为默认模板 字体：等线 常规
 
@@ -108,6 +110,7 @@ __plugin_meta__ = PluginMetadata(
 返回：查询某一功能的详细描述
 
 效果示例：
+
 ```
 菜单 1 1
 菜单 测试插件 1
@@ -121,7 +124,7 @@ __plugin_meta__ = PluginMetadata(
 
 ## 菜单高级信息
 
-menu_info 中brief_des和detail_des可以实现高级效果
+menu_info 中 brief_des 和 detail_des 可以实现高级效果
 
 **Example:**
 
@@ -162,4 +165,4 @@ __plugin_meta__ = PluginMetadata(
 - brief_des
 - detail_des
 
-高级信息可支持的用法见源码nonebot_plugin_PicMenu.img_tool中multi_text方法
+高级信息可支持的用法见源码 nonebot_plugin_PicMenu.img_tool 中 multi_text 方法

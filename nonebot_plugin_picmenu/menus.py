@@ -11,6 +11,7 @@ from PIL import Image
 from dataclasses import dataclass
 from fuzzywuzzy import process, fuzz
 import nonebot.plugin
+from nonebot import get_driver
 import importlib
 import abc
 import json
@@ -18,6 +19,8 @@ from pathlib import Path
 from typing import Union, Dict, Optional, List, Tuple
 
 from .img_tool import *
+
+driver_config = get_driver().config
 
 # 功能的数据信息
 @dataclass
@@ -452,8 +455,15 @@ class DataManager(object):
 
     def load_plugin_info(self):
         # 取已经加载的插件信息
+        # plugins = [x for x in nonebot.plugin.get_loaded_plugins() if x.metadata is not None]
         plugins = list(nonebot.plugin.get_loaded_plugins())
-        plugins.sort(key=lambda x:x.name)
+        def _get_index(arr, item) -> int:
+            try:
+                return arr.index(item)
+            except ValueError:
+                return -1
+
+        plugins.sort(key=lambda x: _get_index(driver_config.plugins_order, x.name))
         for plugin in plugins:
             meta_data = plugin.metadata
             # 判断有元信息
