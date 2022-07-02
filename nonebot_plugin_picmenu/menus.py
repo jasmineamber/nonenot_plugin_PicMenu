@@ -403,7 +403,7 @@ class Template(PicTemplate):
                                     isalpha=True)
         # 粘贴trigger_method图片
         text_img.img_paste(text_img_list[0],
-                           text_img.align_box('trigger_method_box', text_img_list[1],
+                           text_img.align_box('trigger_method_box', text_img_list[0],
                                               pos=(info_text_start_x + 40, pos[1])),
                            isalpha=True)
         # - 添加trigger_condition的box
@@ -415,7 +415,7 @@ class Template(PicTemplate):
                                     isalpha=True)
         # 粘贴trigger_condition图片
         text_img.img_paste(text_img_list[1],
-                           text_img.align_box('trigger_condition_box', text_img_list[2],
+                           text_img.align_box('trigger_condition_box', text_img_list[1],
                                               pos=(info_text_start_x + 40, pos[1])),
                            isalpha=True)
         # - 添加detail_des的box
@@ -427,7 +427,7 @@ class Template(PicTemplate):
                                     isalpha=True)
         # 粘贴detail_des图片
         text_img.img_paste(text_img_list[2],
-                           text_img.align_box('detail_des_box', text_img_list[3],
+                           text_img.align_box('detail_des_box', text_img_list[2],
                                               pos=(info_text_start_x + 40, pos[1])),
                            isalpha=True)
         text_img_size = text_img.img.size
