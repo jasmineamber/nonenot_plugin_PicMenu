@@ -2,6 +2,7 @@ from .menus import MenuManager
 from .img_tool import img2b64
 
 from nonebot import get_driver
+from nonebot.rule import to_me
 from nonebot.plugin import PluginMetadata
 from nonebot.plugin.on import on_startswith
 from nonebot.adapters.onebot.v11 import Bot, Event
@@ -37,7 +38,7 @@ __plugin_meta__ = PluginMetadata(
 driver = get_driver()
 
 menu_manager = MenuManager()
-menu = on_startswith('菜单', priority=1)
+menu = on_startswith('菜单', priority=1, rule=to_me())
 
 
 @driver.on_bot_connect
