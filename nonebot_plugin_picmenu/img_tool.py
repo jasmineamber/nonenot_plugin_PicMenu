@@ -543,7 +543,7 @@ def multi_text(text: str,
                 for cha in piece['text']:
                     cha_width, _ = using_font.getsize(cha)
                     new_line_width += cha_width
-                    if new_line_width < box_size[0]:
+                    if new_line_width < box_size[0] - 10:
                         new_piece_cha_list.append(cha)
                     else:
                         new_text = ''.join(new_piece_cha_list)
