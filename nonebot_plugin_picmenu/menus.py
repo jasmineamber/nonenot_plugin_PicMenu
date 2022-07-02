@@ -402,7 +402,7 @@ class Template(PicTemplate):
                                     text_img.align_box('trigger_method_box', basis_text_list[0]),
                                     isalpha=True)
         # 粘贴trigger_method图片
-        text_img.img_paste(text_img_list[1],
+        text_img.img_paste(text_img_list[0],
                            text_img.align_box('trigger_method_box', text_img_list[1],
                                               pos=(info_text_start_x + 40, pos[1])),
                            isalpha=True)
@@ -414,7 +414,7 @@ class Template(PicTemplate):
                                     text_img.align_box('trigger_condition_box', basis_text_list[1]),
                                     isalpha=True)
         # 粘贴trigger_condition图片
-        text_img.img_paste(text_img_list[2],
+        text_img.img_paste(text_img_list[1],
                            text_img.align_box('trigger_condition_box', text_img_list[2],
                                               pos=(info_text_start_x + 40, pos[1])),
                            isalpha=True)
@@ -426,7 +426,7 @@ class Template(PicTemplate):
                                     text_img.align_box('detail_des_box', basis_text_list[2]),
                                     isalpha=True)
         # 粘贴detail_des图片
-        text_img.img_paste(text_img_list[3],
+        text_img.img_paste(text_img_list[2],
                            text_img.align_box('detail_des_box', text_img_list[3],
                                               pos=(info_text_start_x + 40, pos[1])),
                            isalpha=True)
