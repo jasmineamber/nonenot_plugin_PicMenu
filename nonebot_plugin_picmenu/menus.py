@@ -455,7 +455,6 @@ class DataManager(object):
 
     def load_plugin_info(self):
         # 取已经加载的插件信息
-        # plugins = [x for x in nonebot.plugin.get_loaded_plugins() if x.metadata is not None]
         plugins = list(nonebot.plugin.get_loaded_plugins())
         def _get_index(arr, item) -> int:
             try:
