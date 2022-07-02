@@ -350,14 +350,14 @@ class Template(PicTemplate):
         """
         # 需要生成的列表
         string_list = [
-            func_data.func,
+            # func_data.func,
             func_data.trigger_method,
             func_data.trigger_condition,
             func_data.detail_des
         ]
         # 获取标签文字
         basis_text_list = [simple_text(text, self.basic_font_size, self.using_font, self.colors['blue'])
-                           for text in ['功能：', '触发方式：', '触发条件：', '详细描述：']]
+                           for text in ['触发方式：', '触发命令', '详细描述：']]
         # 获取标签文字的大小
         basis_text_size_list = [x.size for x in basis_text_list]
         # 信息起始位置
@@ -384,22 +384,22 @@ class Template(PicTemplate):
                                           (680, sum(line_max_height_list) + 90),
                                           color=self.colors['white']))
         # - 添加func的box
-        text_img.add_box('func_box', (0, 0), (680, max((basis_text_size_list[0][1], text_size_list[0][1]))))
+        # text_img.add_box('func_box', (0, 0), (680, max((basis_text_size_list[0][1], text_size_list[0][1]))))
         # 粘贴func标签
-        pos, _ = text_img.img_paste(basis_text_list[0],
-                                    text_img.align_box('func_box', basis_text_list[0]),
-                                    isalpha=True)
+        # pos, _ = text_img.img_paste(basis_text_list[0],
+        #                             text_img.align_box('func_box', basis_text_list[0]),
+        #                             isalpha=True)
         # 粘贴func图片
-        text_img.img_paste(text_img_list[0],
-                           text_img.align_box('func_box', text_img_list[0],
-                                              pos=(info_text_start_x + 40, pos[1])),
-                           isalpha=True)
+        # text_img.img_paste(text_img_list[0],
+        #                    text_img.align_box('func_box', text_img_list[0],
+        #                                       pos=(info_text_start_x + 40, pos[1])),
+        #                    isalpha=True)
         # - 添加trigger_method的box
         text_img.add_box('trigger_method_box', (0, text_img.boxes['func_box'].bottom + 30),
-                         (680, max((basis_text_size_list[1][1], text_size_list[1][1]))))
+                         (680, max((basis_text_size_list[0][1], text_size_list[0][1]))))
         # 粘贴trigger_method标签
-        pos, _ = text_img.img_paste(basis_text_list[1],
-                                    text_img.align_box('trigger_method_box', basis_text_list[1]),
+        pos, _ = text_img.img_paste(basis_text_list[0],
+                                    text_img.align_box('trigger_method_box', basis_text_list[0]),
                                     isalpha=True)
         # 粘贴trigger_method图片
         text_img.img_paste(text_img_list[1],
@@ -408,10 +408,10 @@ class Template(PicTemplate):
                            isalpha=True)
         # - 添加trigger_condition的box
         text_img.add_box('trigger_condition_box', (0, text_img.boxes['trigger_method_box'].bottom + 30),
-                         (680, max((basis_text_size_list[2][1], text_size_list[2][1]))))
+                         (680, max((basis_text_size_list[1][1], text_size_list[1][1]))))
         # 粘贴trigger_condition标签
-        pos, _ = text_img.img_paste(basis_text_list[2],
-                                    text_img.align_box('trigger_condition_box', basis_text_list[2]),
+        pos, _ = text_img.img_paste(basis_text_list[1],
+                                    text_img.align_box('trigger_condition_box', basis_text_list[1]),
                                     isalpha=True)
         # 粘贴trigger_condition图片
         text_img.img_paste(text_img_list[2],
@@ -420,10 +420,10 @@ class Template(PicTemplate):
                            isalpha=True)
         # - 添加detail_des的box
         text_img.add_box('detail_des_box', (0, text_img.boxes['trigger_condition_box'].bottom + 30),
-                         (680, max((basis_text_size_list[3][1], text_size_list[3][1]))))
+                         (680, max((basis_text_size_list[2][1], text_size_list[2][1]))))
         # 粘贴detail_des标签
-        pos, _ = text_img.img_paste(basis_text_list[3],
-                                    text_img.align_box('detail_des_box', basis_text_list[3]),
+        pos, _ = text_img.img_paste(basis_text_list[2],
+                                    text_img.align_box('detail_des_box', basis_text_list[2]),
                                     isalpha=True)
         # 粘贴detail_des图片
         text_img.img_paste(text_img_list[3],
