@@ -357,7 +357,7 @@ class Template(PicTemplate):
         ]
         # 获取标签文字
         basis_text_list = [simple_text(text, self.basic_font_size, self.using_font, self.colors['blue'])
-                           for text in ['触发方式：', '触发命令', '详细描述：']]
+                           for text in ['触发方式：', '触发命令：', '详细描述：']]
         # 获取标签文字的大小
         basis_text_size_list = [x.size for x in basis_text_list]
         # 信息起始位置
@@ -367,7 +367,7 @@ class Template(PicTemplate):
         for x in string_list:
             text_img_list.append(
                 multi_text(x,
-                           box_size=(680-info_text_start_x, 0),
+                           box_size=(680-info_text_start_x-25, 0),
                            default_font=self.using_font,
                            default_color=self.colors['blue'],
                            default_size=self.basic_font_size,
