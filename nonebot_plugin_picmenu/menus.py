@@ -395,7 +395,7 @@ class Template(PicTemplate):
         #                                       pos=(info_text_start_x + 40, pos[1])),
         #                    isalpha=True)
         # - 添加trigger_method的box
-        text_img.add_box('trigger_method_box', (0, text_img.boxes['func_box'].bottom + 30),
+        text_img.add_box('trigger_method_box', (0, 0),
                          (680, max((basis_text_size_list[0][1], text_size_list[0][1]))))
         # 粘贴trigger_method标签
         pos, _ = text_img.img_paste(basis_text_list[0],
