@@ -451,7 +451,9 @@ class DataManager(object):
 
     def load_plugin_info(self):
         # 取已经加载的插件信息
-        for plugin in nonebot.plugin.get_loaded_plugins():
+        plugins = list(nonebot.plugin.get_loaded_plugins())
+        plugins.sort(key=lambda x:x.name)
+        for plugin in plugins:
             meta_data = plugin.metadata
             # 判断有元信息
             if meta_data is None:
