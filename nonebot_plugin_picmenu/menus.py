@@ -25,7 +25,7 @@ driver_config = get_driver().config
 # 功能的数据信息
 @dataclass
 class FuncData:
-    func: str
+    scope: str
     trigger_method: str
     trigger_condition: str
     brief_des: str
@@ -189,7 +189,7 @@ class Template(PicTemplate):
         plugin_name = plugin_data.name
         data = plugin_data.funcs
         column_title = FuncData(
-            func='',
+            scope='使用范围',
             trigger_method='触发方式',
             trigger_condition='触发命令',
             brief_des='说明',
@@ -197,7 +197,7 @@ class Template(PicTemplate):
         )
         _data = copy.deepcopy(data)
         _data.insert(0, column_title)
-        column_count = 4
+        column_count = 5
         row_count = len(_data)
         # 数据尺寸测算
         row_size_list = []
@@ -206,7 +206,7 @@ class Template(PicTemplate):
                 index_size = calculate_text_size('序号', self.basic_font_size, self.using_font)
             else:
                 index_size = calculate_text_size(str(index), self.basic_font_size, self.using_font)
-            # func_size = calculate_text_size(func_data.func, self.basic_font_size, self.using_font)
+            scope_size = calculate_text_size(func_data.scope, self.basic_font_size, self.using_font)
             method_size = calculate_text_size(func_data.trigger_method, self.basic_font_size, self.using_font)
             condition_size = calculate_text_size(func_data.trigger_condition, self.basic_font_size, self.using_font)
             brief_des_size = multi_text(func_data.brief_des,
@@ -214,7 +214,7 @@ class Template(PicTemplate):
                                         default_size=25,
                                         box_size=(300, 0)
                                         ).size
-            row_size_list.append((index_size, method_size, condition_size, brief_des_size))
+            row_size_list.append((index_size, scope_size, method_size, condition_size, brief_des_size))
         # 边距
         margin = 10
         # 测行高
@@ -223,7 +223,8 @@ class Template(PicTemplate):
             max((x[0][0] + margin * 2 for x in row_size_list)),
             max((x[1][0] + margin * 2 for x in row_size_list)),
             max((x[2][0] + margin * 2 for x in row_size_list)),
-            max((x[3][0] + margin * 2 for x in row_size_list))
+            max((x[3][0] + margin * 2 for x in row_size_list)),
+            max((x[4][0] + margin * 2 for x in row_size_list))
         )
         # 建立表格画板
         table_width = sum(col_max_width_tuple) + 3
@@ -255,19 +256,19 @@ class Template(PicTemplate):
                 table.align_box(f'box_{index}_0', id_text, align='center'),
                 isalpha=True
             )
-            # # 第二个cell里填func（功能）
-            # func_text = simple_text(func_data.func, self.basic_font_size, self.using_font, self.colors['blue'])
-            # table.img_paste(
-            #     func_text,
-            #     table.align_box(f'box_{index}_1', func_text, align='center'),
-            #     isalpha=True
-            # )
+            # 第二个cell里填scope（使用范围）
+            scope_text = simple_text(func_data.scope, self.basic_font_size, self.using_font, self.colors['blue'])
+            table.img_paste(
+                scope_text,
+                table.align_box(f'box_{index}_1', scope_text, align='center'),
+                isalpha=True
+            )
             # 第三个cell里填trigger_method（触发方式）
             trigger_method_text = simple_text(func_data.trigger_method, self.basic_font_size, self.using_font,
                                               self.colors['blue'])
             table.img_paste(
                 trigger_method_text,
-                table.align_box(f'box_{index}_1', trigger_method_text, align='center'),
+                table.align_box(f'box_{index}_2', trigger_method_text, align='center'),
                 isalpha=True
             )
             # 第四个cell里填trigger_condition（触发条件）
@@ -275,7 +276,7 @@ class Template(PicTemplate):
                                                  self.colors['blue'])
             table.img_paste(
                 trigger_condition_text,
-                table.align_box(f'box_{index}_2', trigger_condition_text, align='center'),
+                table.align_box(f'box_{index}_3', trigger_condition_text, align='center'),
                 isalpha=True
             )
             # 第五个cell里填brief_des（功能简述）
@@ -291,7 +292,7 @@ class Template(PicTemplate):
                                         )
             table.img_paste(
                 brief_des_text,
-                table.align_box(f'box_{index}_3', brief_des_text, align='center'),
+                table.align_box(f'box_{index}_4', brief_des_text, align='center'),
                 isalpha=True
             )
         # 获取table尺寸
@@ -354,14 +355,14 @@ class Template(PicTemplate):
         """
         # 需要生成的列表
         string_list = [
-            # func_data.func,
+            func_data.scope,
             func_data.trigger_method,
             func_data.trigger_condition,
             func_data.detail_des
         ]
         # 获取标签文字
         basis_text_list = [simple_text(text, self.basic_font_size, self.using_font, self.colors['blue'])
-                           for text in ['触发方式：', '触发命令：', '详细描述：']]
+                           for text in ['使用范围：', '触发方式：', '触发命令：', '详细描述：']]
         # 获取标签文字的大小
         basis_text_size_list = [x.size for x in basis_text_list]
         # 信息起始位置
@@ -388,50 +389,50 @@ class Template(PicTemplate):
                                           (680, sum(line_max_height_list) + 90),
                                           color=self.colors['white']))
         # - 添加func的box
-        # text_img.add_box('func_box', (0, 0), (680, max((basis_text_size_list[0][1], text_size_list[0][1]))))
-        # 粘贴func标签
-        # pos, _ = text_img.img_paste(basis_text_list[0],
-        #                             text_img.align_box('func_box', basis_text_list[0]),
-        #                             isalpha=True)
-        # 粘贴func图片
-        # text_img.img_paste(text_img_list[0],
-        #                    text_img.align_box('func_box', text_img_list[0],
-        #                                       pos=(info_text_start_x + 40, pos[1])),
-        #                    isalpha=True)
-        # - 添加trigger_method的box
-        text_img.add_box('trigger_method_box', (0, 0),
-                         (680, max((basis_text_size_list[0][1], text_size_list[0][1]))))
-        # 粘贴trigger_method标签
+        text_img.add_box('scope_box', (0, 0), (680, max((basis_text_size_list[0][1], text_size_list[0][1]))))
+        # 粘贴scope标签
         pos, _ = text_img.img_paste(basis_text_list[0],
-                                    text_img.align_box('trigger_method_box', basis_text_list[0]),
+                                    text_img.align_box('scope_box', basis_text_list[0]),
+                                    isalpha=True)
+        # 粘贴scope图片
+        text_img.img_paste(text_img_list[0],
+                           text_img.align_box('scope_box', text_img_list[0],
+                                              pos=(info_text_start_x + 40, pos[1])),
+                           isalpha=True)
+        # - 添加trigger_method的box
+        text_img.add_box('trigger_method_box', (0, text_img.boxes['scope_box'].bottom + 30),
+                         (680, max((basis_text_size_list[1][1], text_size_list[1][1]))))
+        # 粘贴trigger_method标签
+        pos, _ = text_img.img_paste(basis_text_list[1],
+                                    text_img.align_box('trigger_method_box', basis_text_list[1]),
                                     isalpha=True)
         # 粘贴trigger_method图片
-        text_img.img_paste(text_img_list[0],
-                           text_img.align_box('trigger_method_box', text_img_list[0],
+        text_img.img_paste(text_img_list[1],
+                           text_img.align_box('trigger_method_box', text_img_list[1],
                                               pos=(info_text_start_x + 40, pos[1])),
                            isalpha=True)
         # - 添加trigger_condition的box
         text_img.add_box('trigger_condition_box', (0, text_img.boxes['trigger_method_box'].bottom + 30),
-                         (680, max((basis_text_size_list[1][1], text_size_list[1][1]))))
+                         (680, max((basis_text_size_list[2][1], text_size_list[2][1]))))
         # 粘贴trigger_condition标签
-        pos, _ = text_img.img_paste(basis_text_list[1],
-                                    text_img.align_box('trigger_condition_box', basis_text_list[1]),
+        pos, _ = text_img.img_paste(basis_text_list[2],
+                                    text_img.align_box('trigger_condition_box', basis_text_list[2]),
                                     isalpha=True)
         # 粘贴trigger_condition图片
-        text_img.img_paste(text_img_list[1],
-                           text_img.align_box('trigger_condition_box', text_img_list[1],
+        text_img.img_paste(text_img_list[2],
+                           text_img.align_box('trigger_condition_box', text_img_list[2],
                                               pos=(info_text_start_x + 40, pos[1])),
                            isalpha=True)
         # - 添加detail_des的box
         text_img.add_box('detail_des_box', (0, text_img.boxes['trigger_condition_box'].bottom + 30),
-                         (680, max((basis_text_size_list[2][1], text_size_list[2][1]))))
+                         (680, max((basis_text_size_list[3][1], text_size_list[3][1]))))
         # 粘贴detail_des标签
-        pos, _ = text_img.img_paste(basis_text_list[2],
-                                    text_img.align_box('detail_des_box', basis_text_list[2]),
+        pos, _ = text_img.img_paste(basis_text_list[3],
+                                    text_img.align_box('detail_des_box', basis_text_list[3]),
                                     isalpha=True)
         # 粘贴detail_des图片
-        text_img.img_paste(text_img_list[2],
-                           text_img.align_box('detail_des_box', text_img_list[2],
+        text_img.img_paste(text_img_list[3],
+                           text_img.align_box('detail_des_box', text_img_list[3],
                                               pos=(info_text_start_x + 40, pos[1])),
                            isalpha=True)
         text_img_size = text_img.img.size
@@ -485,7 +486,7 @@ class DataManager(object):
                     usage=meta_data.usage,
                     funcs=[
                         FuncData(
-                            func=data['func'],
+                            scope=data['scope'],
                             trigger_method=data['trigger_method'],
                             trigger_condition=data['trigger_condition'],
                             brief_des=data['brief_des'],

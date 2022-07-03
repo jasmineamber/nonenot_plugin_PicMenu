@@ -20,7 +20,7 @@ __plugin_meta__ = PluginMetadata(
         'author': 'hamo-reid',
         'menu_data': [
             {
-                'func': '查询菜单',
+                'scope': '所有人',
                 'trigger_method': '普通消息',
                 'trigger_condition': '菜单',
                 'brief_des': '用于查询菜单的命令',
