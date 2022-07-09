@@ -21,7 +21,7 @@ __plugin_meta__ = PluginMetadata(
         'menu_data': [
             {
                 'scope': '所有人',
-                'trigger_method': '普通消息',
+                'trigger_method': '@机器人',
                 'trigger_condition': '菜单',
                 'brief_des': '用于查询菜单的命令',
                 'detail_des': '查看插件总表、插件命令和命令详情,具体方法如下：\n'
