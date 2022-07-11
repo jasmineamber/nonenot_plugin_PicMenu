@@ -5,7 +5,7 @@ from nonebot import get_driver
 from nonebot.rule import to_me
 from nonebot.plugin import PluginMetadata
 from nonebot.plugin.on import on_startswith
-from nonebot.adapters.onebot.v11 import Bot, Event
+from nonebot.adapters.onebot.v11 import Bot, GroupMessageEvent
 from nonebot.adapters.onebot.v11.message import MessageSegment
 import re
 
@@ -47,13 +47,14 @@ async def _(bot: Bot):
 
 
 @menu.handle()
-async def _(event: Event):
+async def _(event: GroupMessageEvent):
+    group_id = event.group_id
     msg = str(event.get_message())
     if match_result := re.match(r'^菜单 (.*?) (.*?)$|^/菜单 (.*?) (.*?)$', msg):
         result = [x for x in match_result.groups() if x is not None]
         plugin_name = result[0]
         cmd = result[1]
-        temp = menu_manager.generate_command_details_image(plugin_name, cmd)
+        temp = menu_manager.generate_command_details_image(plugin_name, cmd, group_id)
         if isinstance(temp, str):
             if temp == 'PluginIndexOutRange':
                 await menu.finish(MessageSegment.text('插件序号不存在'))
@@ -68,7 +69,7 @@ async def _(event: Event):
     elif match_result := re.match(r'^菜单 (.*)$|^/菜单 (.*)$', msg):
         result = [x for x in match_result.groups() if x is not None]
         plugin_name = result[0]
-        temp = menu_manager.generate_plugin_menu_image(plugin_name)
+        temp = menu_manager.generate_plugin_menu_image(plugin_name, group_id)
         if isinstance(temp, str):
             if temp == 'PluginIndexOutRange':
                 await menu.finish(MessageSegment.text('插件序号不存在'))
@@ -77,5 +78,5 @@ async def _(event: Event):
         else:
             await menu.finish(MessageSegment.image('base64://' + img2b64(temp)))
     else:
-        img = menu_manager.generate_main_menu_image()
+        img = menu_manager.generate_main_menu_image(group_id)
         await menu.finish(MessageSegment.image('base64://' + img2b64(img)))
