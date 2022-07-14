@@ -85,8 +85,8 @@ class Template(PicTemplate):
         :return: Image对象
         """
         _data = copy.deepcopy(data)
-        _data[0].insert(0, '插件名称')
-        _data[1].insert(0, '插件说明')
+        _data[0].insert(0, '服务名称')
+        _data[1].insert(0, '服务说明')
         column_count = len(_data) + 1
         row_count = len(_data[0])
         # 数据尺寸测算
@@ -176,13 +176,13 @@ class Template(PicTemplate):
         main_menu.rectangle(Box((border_box_top_left[0] - 25, border_box_top_left[1] - 25),
                                 (50, 50)), outline=self.colors['yellow'], width=5)
         main_menu.add_box('title_box', (0, 0), (main_menu.get_size()[0], 100))
-        title = simple_text('插件菜单', 60, self.using_font, self.colors['blue'])
+        title = simple_text('服务菜单', 60, self.using_font, self.colors['blue'])
         main_menu.img_paste(title, main_menu.align_box('title_box', title, align='center'), isalpha=True)
         return main_menu.img
 
     def generate_plugin_menu(self, plugin_data: PluginMenuData) -> Image:
         """
-        生成插件命令菜单
+        生成服务命令菜单
         :param plugin_data: PluginMenuData对象
         :return: Image对象
         """
