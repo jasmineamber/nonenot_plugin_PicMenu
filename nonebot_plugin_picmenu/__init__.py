@@ -56,7 +56,7 @@ async def _(event: GroupMessageEvent):
         result = [x for x in match_result.groups() if x is not None]
         plugin_name = result[0]
         cmd = result[1]
-        temp = menu_manager.generate_command_details_image(plugin_name, cmd, group_id)
+        temp = menu_manager.generate_command_details_image(plugin_name, cmd, group_id, enabled_services)
         if isinstance(temp, str):
             if temp == 'PluginIndexOutRange':
                 await menu.finish(MessageSegment.text('插件序号不存在'))
