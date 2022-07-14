@@ -17,7 +17,6 @@ import abc
 import json
 from pathlib import Path
 from typing import Union, Dict, Optional, List, Tuple
-from plugins.qqgroup.plugins.manager.group import group_services
 
 from .img_tool import *
 
@@ -499,29 +498,29 @@ class DataManager(object):
             )
             self.plugin_names.append(meta_data.name)
 
-    def get_group_services(self, group_id):
-        return [p for p in self.plugin_menu_data_list if p.name in group_services[group_id]]
+    def get_group_services(self, group_id, enabled_services):
+        return [p for p in self.plugin_menu_data_list if p.name in enabled_services[group_id]]
 
-    def get_group_services_name(self, group_id):
-        return [p.name for p in self.get_group_services(group_id)]
+    def get_group_services_name(self, group_id, enabled_services):
+        return [p.name for p in self.get_group_services(group_id, enabled_services)]
 
-    def get_main_menu_data(self, group_id) -> Tuple[List, List]:
+    def get_main_menu_data(self, group_id, enabled_services) -> Tuple[List, List]:
         """
         获取生成主菜单的信息
         :return: 元组（列表[插件名]，列表[插件描述]）
         """
         descriptions = [
-            menu_data.description for menu_data in self.get_group_services(group_id)
+            menu_data.description for menu_data in self.get_group_services(group_id, enabled_services)
         ]
-        return self.get_group_services_name(group_id), descriptions
+        return self.get_group_services_name(group_id, enabled_services), descriptions
 
-    def get_plugin_menu_data(self, plugin_name: str, group_id) -> Union[PluginMenuData, str]:
+    def get_plugin_menu_data(self, plugin_name: str, group_id, enabled_services) -> Union[PluginMenuData, str]:
         """
         获取生成插件菜单的数据
         :param plugin_name: 插件名
         :return:
         """
-        enabled_services = self.get_group_services(group_id)
+        enabled_services = self.get_group_services(group_id, enabled_services)
         if plugin_name.isdigit():  # 判断是否为下标，是则进行下标索引，否则进行模糊匹配
             index = int(plugin_name) - 1
             if 0 <= index < len(enabled_services):
@@ -625,14 +624,14 @@ class MenuManager(object):  # 菜单总管理
             with (self.cwd / 'menu_config' / 'config.json').open('w', encoding='utf-8') as fp:
                 fp.write(json.dumps({'default': 'font_path'}))
 
-    def generate_main_menu_image(self, group_id) -> Image:  # 生成主菜单图片
-        data = self.data_manager.get_main_menu_data(group_id)
+    def generate_main_menu_image(self, group_id, enabled_services) -> Image:  # 生成主菜单图片
+        data = self.data_manager.get_main_menu_data(group_id, enabled_services)
         template = self.template_manager.select_template('default')
         img = template().generate_main_menu(data)
         return img
 
-    def generate_plugin_menu_image(self, plugin_name, group_id) -> Image:  # 生成二级菜单图片
-        init_data = self.data_manager.get_plugin_menu_data(plugin_name, group_id)
+    def generate_plugin_menu_image(self, plugin_name, group_id, enabled_services) -> Image:  # 生成二级菜单图片
+        init_data = self.data_manager.get_plugin_menu_data(plugin_name, group_id, enabled_services)
         if isinstance(init_data, str):  # 判断是否匹配到插件
             return init_data
         else:
