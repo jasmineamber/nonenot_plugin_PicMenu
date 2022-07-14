@@ -640,8 +640,8 @@ class MenuManager(object):  # 菜单总管理
             img = template().generate_plugin_menu(data)
             return img
 
-    def generate_command_details_image(self, plugin_name, func, group_id) -> Image:  # 生成三级菜单图片
-        plugin_data = self.data_manager.get_plugin_menu_data(plugin_name, group_id)
+    def generate_command_details_image(self, plugin_name, func, group_id, enabled_services) -> Image:  # 生成三级菜单图片
+        plugin_data = self.data_manager.get_plugin_menu_data(plugin_name, group_id, enabled_services)
         if isinstance(plugin_data, str):  # 判断是否匹配到插件
             return plugin_data
         else:
