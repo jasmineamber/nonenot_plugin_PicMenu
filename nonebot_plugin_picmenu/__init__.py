@@ -10,31 +10,31 @@ from nonebot.adapters.onebot.v11.message import MessageSegment
 from plugins.qqgroup.plugins.manager.group import get_group_services
 import re
 
-__plugin_meta__ = PluginMetadata(
-    name='帮助菜单',
-    description='为已添加的服务提供可视化的帮助菜单',
-    usage='显示所有服务及描述：菜单\n'
-          '显示某一服务的功能菜单：菜单 服务名/序号\n'
-          '显示某一功能详情：菜单 服务名\序号 功能名\序号\n'
-          '注：服务名\功能名 支持模糊匹配',
-    extra={
-        'author': 'hamo-reid',
-        'menu_data': [
-            {
-                'scope': '所有人',
-                'trigger_method': '@机器人',
-                'trigger_condition': '菜单',
-                'brief_des': '用于查询菜单的命令',
-                'detail_des': '查看服务总表、服务命令和命令详情,具体方法如下：\n'
-                              '查看菜单总表：菜单\n'
-                              '查看服务命令：菜单 服务名/序号\n'
-                              '查看命令详情：菜单 服务名/序号 命令/命令序号\n'
-                              '服务名和命令均支持模糊查找'
-            },
-        ],
-        'menu_template': 'default'
-    }
-)
+# __plugin_meta__ = PluginMetadata(
+#     name='帮助菜单',
+#     description='为已添加的服务提供可视化的帮助菜单',
+#     usage='显示所有服务及描述：菜单\n'
+#           '显示某一服务的功能菜单：菜单 服务名/序号\n'
+#           '显示某一功能详情：菜单 服务名\序号 功能名\序号\n'
+#           '注：服务名\功能名 支持模糊匹配',
+#     extra={
+#         'author': 'hamo-reid',
+#         'menu_data': [
+#             {
+#                 'scope': '所有人',
+#                 'trigger_method': '@机器人',
+#                 'trigger_condition': '菜单',
+#                 'brief_des': '用于查询菜单的命令',
+#                 'detail_des': '查看服务总表、服务命令和命令详情,具体方法如下：\n'
+#                               '查看菜单总表：菜单\n'
+#                               '查看服务命令：菜单 服务名/序号\n'
+#                               '查看命令详情：菜单 服务名/序号 命令/命令序号\n'
+#                               '服务名和命令均支持模糊查找'
+#             },
+#         ],
+#         'menu_template': 'default'
+#     }
+# )
 
 driver = get_driver()
 
