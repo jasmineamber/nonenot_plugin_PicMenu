@@ -178,6 +178,9 @@ class Template(PicTemplate):
         main_menu.add_box('title_box', (0, 0), (main_menu.get_size()[0], 100))
         title = simple_text('服务菜单', 60, self.using_font, self.colors['blue'])
         main_menu.img_paste(title, main_menu.align_box('title_box', title, align='center'), isalpha=True)
+        main_menu.add_box('tip_box', (-25, 95), (main_menu.get_size()[0], 100))
+        tip = simple_text('菜单 序号/服务名称 查询具体服务', 20, self.using_font, self.colors['blue'])
+        main_menu.img_paste(tip, main_menu.align_box('tip_box', title, align='center'), isalpha=True)
         return main_menu.img
 
     def generate_plugin_menu(self, plugin_data: PluginMenuData) -> Image:
@@ -345,6 +348,9 @@ class Template(PicTemplate):
         main_menu.add_box('title_box', (0, 0), (main_menu.get_size()[0], 100))
         title = simple_text(plugin_name, 60, self.using_font, self.colors['blue'])
         main_menu.img_paste(title, main_menu.align_box('title_box', title, align='center'), isalpha=True)
+        main_menu.add_box('tip_box', (-25, 80), (main_menu.get_size()[0], 100))
+        title = simple_text('菜单 序号/服务名称 命令序号/命令名称 查询命令详情', 20, self.using_font, self.colors['blue'])
+        main_menu.img_paste(title, main_menu.align_box('tip_box', title, align='center'), isalpha=True)
         return main_menu.img
 
     def generate_command_details(self, func_data: FuncData) -> Image:
@@ -552,11 +558,11 @@ class DataManager(object):
             else:  # 超限处理
                 return 'CommandIndexOutRange'
         else:
-            func_list = [func.func for func in funcs]  # 功能名的列表
+            func_list = [func.trigger_condition for func in funcs]  # 功能名的列表
             fuzzy_func = self.fuzzy_match_and_check(func, func_list)  # 模糊匹配
             if fuzzy_func is not None:
                 for func_data in funcs:
-                    if fuzzy_func == func_data.func:
+                    if fuzzy_func == func_data.trigger_condition:
                         return func_data
             else:  # 过于模糊
                 return 'CannotMatchCommand'
