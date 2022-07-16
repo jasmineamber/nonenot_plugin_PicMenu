@@ -7,7 +7,7 @@ from nonebot.plugin import PluginMetadata
 from nonebot.plugin.on import on_startswith
 from nonebot.adapters.onebot.v11 import Bot, GroupMessageEvent
 from nonebot.adapters.onebot.v11.message import MessageSegment
-from plugins.qqgroup.plugins.manager.group import get_group_services
+from utils.groupUtils import GroupUtils
 import re
 
 # __plugin_meta__ = PluginMetadata(
@@ -50,14 +50,14 @@ async def _(bot: Bot):
 
 @menu.handle()
 async def _(event: GroupMessageEvent):
-    enabled_services = await get_group_services()
-    group_id = event.group_id
+    gu = GroupUtils(event.group_id)
+    enabled_services = await gu.enabled_services()
     msg = str(event.get_message())
     if match_result := re.match(r'^菜单 (.*?) (.*?)$|^/菜单 (.*?) (.*?)$', msg):
         result = [x for x in match_result.groups() if x is not None]
         plugin_name = result[0]
         cmd = result[1]
-        temp = menu_manager.generate_command_details_image(plugin_name, cmd, group_id, enabled_services)
+        temp = menu_manager.generate_command_details_image(plugin_name, cmd, enabled_services)
         if isinstance(temp, str):
             if temp == 'PluginIndexOutRange':
                 await menu.finish(MessageSegment.text('服务序号不存在'))
@@ -72,7 +72,7 @@ async def _(event: GroupMessageEvent):
     elif match_result := re.match(r'^菜单 (.*)$|^/菜单 (.*)$', msg):
         result = [x for x in match_result.groups() if x is not None]
         plugin_name = result[0]
-        temp = menu_manager.generate_plugin_menu_image(plugin_name, group_id, enabled_services)
+        temp = menu_manager.generate_plugin_menu_image(plugin_name, enabled_services)
         if isinstance(temp, str):
             if temp == 'PluginIndexOutRange':
                 await menu.finish(MessageSegment.text('服务序号不存在'))
@@ -81,5 +81,5 @@ async def _(event: GroupMessageEvent):
         else:
             await menu.finish(MessageSegment.image('base64://' + img2b64(temp)))
     else:
-        img = menu_manager.generate_main_menu_image(group_id, enabled_services)
+        img = menu_manager.generate_main_menu_image(enabled_services)
         await menu.finish(MessageSegment.image('base64://' + img2b64(img)))
